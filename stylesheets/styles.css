@@ -188,12 +188,28 @@ footer {
   bottom:50px;
 }
 
+.navi {
+ display: block;
+}
+.navi-seperator {
+ color: #FFF;
+}
+
 @media print, screen and (max-width: 960px) {
 
   div.wrapper {
     width:auto;
     margin:0;
   }
+
+  .navi {
+   display: inline;
+  }
+
+  .navi-seperator {
+   color: #555;
+  }
+
 
   header, section, footer {
     float:none;
