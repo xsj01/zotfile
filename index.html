@@ -93,8 +93,8 @@
 <p>After highlighting and annotating pdfs on your tablet (or with the PDF reader application on your computer), ZotFile can automatically extract the highlighted text and note annotations from the pdf. The extracted text is saved in a Zotero note. Thanks to Joe Devietti, this feature is now available on all platforms based on the pdf.js library. </p>
 
 <figure>
-<img src="pics/pdf-annotation-full.png" alt="pdf annotation and highlight extraction" />
-<figcaption>pdf annotation and highlight extraction</figcaption></figure>
+<img src="pics/pdf-annotation-full.png" alt="" />
+<figcaption></figcaption></figure>
 
 <h3 id="installzotfile">INSTALL ZOTFILE</h3>
 
@@ -120,8 +120,8 @@ You can now start sending pdfs (or other files) to your tablet. Simply right-cli
 <h3 id="renamingrules">RENAMING RULES</h3>
 
 <figure>
-<img src="pics/zotfile-reader-rename.jpg" alt="preference window" />
-<figcaption>preference window</figcaption></figure>
+<img src="pics/zotfile-reader-rename.jpg" alt="" />
+<figcaption></figcaption></figure>
 
 <p>ZotFile renames files based on bibliographic information from the currently selected Zotero item. You can change the renaming rules in the zotfile preference window under renaming rules (Zotero Actions -&gt; ZotFile Preferences). The option &#8216;Renaming Format&#8217; allows you to create custom renaming rules using wildcards, which are replaced by metadata from the selected Zotero item. Zotfile also supports optional and exclusive wild-cards. Optional wild-cards mean that <code>{-%y}</code> only includes the seperator <code>-</code> in the filename if <code>%y</code> is defined. Exclusive wild-cards such as <code>%s|%j</code> will generate the entry for <code>%s</code> if that exists and the entry for <code>%j</code> otherwise. Other characters between the wildcards and the bar are ignored (<code>%s | stuff %j | - more %p</code> is equivalent to <code>%s|%j|%p</code>). Some examples are below. </p>
 
@@ -248,7 +248,7 @@ Optional parameters: <code>flags</code> (default <code>&quot;g&quot;</code>)</p>
 
 <h4 id="itemtypesandfieldnames">Item types and field names</h4>
 
-<p>A complete list of Zotero fields is available <a href="https://api.zotero.org/itemFields?pprint=1">here</a> and all the item types are <a href="https://api.zotero.org/itemTypes?pprint=1">here</a>. The fields for each item type are listed on <a href="http://aurimasv.github.io/z2csl/typeMap.xml">this page</a>. Zotfile defines a number of <em>additional fields</em> that can be used as part of wildcards: <code>itemType</code> is the language specific item type, <code>formatedTitle</code> is the title formatted using the options defined in the zofile preferences, <code>author</code> is the author string formatted using the zotfile preferences, <code>authorLastF</code> is the author string formatted as LastnameF, and <code>authorInitials</code> are the initial of the authors. </p>
+<p>A complete list of Zotero fields is available <a href="https://api.zotero.org/itemFields?pprint=1">here</a> (<code>dateModified</code> and <code>dateAdded</code> seem to be missing from that list) and all the item types are <a href="https://api.zotero.org/itemTypes?pprint=1">here</a>. The fields for each item type are listed on <a href="http://aurimasv.github.io/z2csl/typeMap.xml">this page</a>. Zotfile defines a number of <em>additional fields</em> that can be used as part of wildcards: <code>itemType</code> is the language specific item type, <code>formatedTitle</code> is the title formatted using the options defined in the zofile preferences, <code>author</code> is the author string formatted using the zotfile preferences, <code>authorLastF</code> is the author string formatted as LastnameF, and <code>authorInitials</code> are the initial of the authors. </p>
 
 <h4 id="formattingrules">Formatting rules</h4>
 
@@ -376,9 +376,11 @@ JSON.parse(wildcard)</code></pre>
 <h4 id="changesin3.1">Changes in 3.1</h4>
 
 <ul>
+<li>New zotfile webpage at <a href="http://www.zotfile.com/">www.zotfile.com</a> (please update links)</li>
 <li>User-defined wildcards (<a href="#user-definedwildcards">documentation</a>)</li>
 <li>watch folder now adds an attachment and retrieves metadata if no file is selected<br/>
  (change message, change version)</li>
+<li>fix pdf.js issue with some pdf annotation (see <a href="https://forums.zotero.org/discussion/31903/extract-pdf-annotations-message-hangs-on-linuxubuntu/#Comment_177201">this</a> discussion)</li>
 <li>The <code>%w</code> wildcard now maps to the correct field for most item types</li>
 <li>The <code>%u</code> wildcard was removed (use <code>%y</code> instead)</li>
 <li>Choose the number of authors to display when truncating authors during renaming (thanks to bwiernik)</li>

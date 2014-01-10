@@ -298,6 +298,7 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 
 #### Changes in 3.1
 
+- New zotfile webpage at [www.zotfile.com](http://www.zotfile.com/) (please update links)
 - User-defined wildcards ([documentation](#user-definedwildcards))
 - watch folder now adds an attachment and retrieves metadata if no file is selected
   (change message, change version)
