@@ -42,7 +42,7 @@ You can now start sending pdfs (or other files) to your tablet. Simply right-cli
 
 ZotFile renames files based on bibliographic information from the currently selected Zotero item. You can change the renaming rules in the zotfile preference window under renaming rules (Zotero Actions -> ZotFile Preferences). The option 'Renaming Format' allows you to create custom renaming rules using wildcards, which are replaced by metadata from the selected Zotero item. Zotfile also supports optional and exclusive wild-cards. Optional wild-cards mean that `{-%y}` only includes the seperator `-` in the filename if `%y` is defined. Exclusive wild-cards such as `%s|%j` will generate the entry for `%s` if that exists and the entry for `%j` otherwise. Other characters between the wildcards and the bar are ignored (`%s | stuff %j | - more %p` is equivalent to `%s|%j|%p`). Some examples are below.
 
-##### Wildcards
+#### Wildcards
 - `%a` last names of authors (not editors etc) or inventors. The maximum number of authors are changed under 'Additional Settings'.
 - `%I` author initials.
 - `%F` author's last name with first letter of first name (e.g. EinsteinA).
@@ -83,7 +83,7 @@ Abbott, Andrew, and Alexandra Hrycak (1990): Measuring Resemblance in Sequence D
 - `%a_%y_%t`: Abbott_1990_Measuring
 
 ### USER-DEFINED WILDCARDS
-All wildcards are now defined in the hidden preference `zotfile.wildcards.default` and can be changed by the user. But I **strongly** suggest that you do not change this preference. Instead, there is a second hidden preference  `zotfile.wildcards.user` that allows you to add and overwrite wildcards (hidden preference can be changed in `about:config`). This is a preference is for advanced user without any error checking so be careful what you do! By default, `zotfile.wildcards.user` is set to `{}` so that no user wildcards are defined. Below is an example JSON that defines wildcards for `%1`, `%2`, `%3`, `%4`, and `%5` illustrating all the possibilities:
+All wildcards are now defined in the hidden preference `zotfile.wildcards.default` and can be changed by the user. But I **strongly** suggest that you do not change this preference. Instead, there is a second hidden preference  `zotfile.wildcards.user`, which allows you to add and overwrite wildcards (hidden preference can be changed in `about:config`). This is a preference for advanced users without any error checking. Be careful what you do and validate your JSON using [this site](http://jsonlint.com)! By default, `zotfile.wildcards.user` is set to `{}` so that no user wildcards are defined. Below is an example JSON that defines wildcards for `%1`, `%2`, `%3`, `%4`, and `%5` illustrating all the possibilities:
 
 1. String with the name of Zotero field (`%1`)
 2. JSON with item type specific field names (`%2`)
@@ -92,14 +92,25 @@ All wildcards are now defined in the hidden preference `zotfile.wildcards.defaul
 
 3. JSON with <code>field</code> element and transformations based on regular expressions (`%3` and `%4`)
 
-    ZotFile uses the specified <code>field</code> as an input string and then (a) searches for matches (`%3`) and/or (b) replaces matches of a pattern using regular expressions (`%4`). To search for matches, zotfile uses the [exec() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) based on the regular expression defined in `regex`, and returns the element specified in `group` so that `0` returns the matched text and higher values the corresponding capturing parenthesis (`group` is optional with `0` as default). If the match fails, Zotfile uses the original field data. To replace matches, zotfile uses the [replace() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace) and the regular expression and replacement string specified in the `replace` element. The replacement string can include `$n` for the *n*th parenthesized submatch string and other special replacement patterns (see [replace() documentationn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)). The wildcard `%4`, for example, takes the date when an item was added, which is formatted like this `2012-02-18 02:31:37`, and returns `20120218`. `flags` is an optional parameter for both searching and replacing and corresponds to [flags for regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_Searching_With_Flags) in javascript (default: `"g"`).
+    ZotFile uses the specified <code>field</code> as an input string and then applies the transformations specified in `operations`. The value of `field` can either be the name of a Zotero field (see 1) or a javascript object with item type specific field names (see 2). `operations` is an array of javascript objects and supports three types of transformations that are identified by the `function` element:
 
-    The value of `field` can either be the name of a Zotero field such as `title` or a javascript object with item type specific field names (see 2). You can also add a fourth optional element `transform`, which converts the output to lower case `lowerCase`, to upper case `upperCase`, or trims it `trim`.
+    - `exec`: Search for matches using regular expressions (`%3`). Zotfile uses the [exec() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) based on the regular expression defined in `regex`, and returns the element specified in `group` so that `0` returns the matched text and higher values the corresponding capturing parenthesis. If the match fails, this operation returns the input data.<br>
+    Required parameters: `regex`<br>
+    Optional parameters: `group` (default `0`), `flags` (default `"g"`)
 
-4. Finally, the wildcard `%5` combines item type specific field names with regular expression in a completely arbitrary way. Note that the replacement operation is always performed first.
+    - `replace`: Replaces matches of a pattern using regular expressions (`%4`). Zotfile uses the [replace() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace) with the regular expression `regex` and replacement string `replacement`. The replacement string can include `$n` for the *n*th parenthesized sub-match string and other special replacement patterns (see [replace() documentationn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)). The wildcard `%4`, for example, takes the date when an item was added (format `2012-02-18 02:31:37`) and returns the reformatted date as `20120218`.<br>
+    Required parameters: `regex`, `replacement`<br>
+    Optional parameters: `flags` (default `"g"`)
+
+    - `toLowerCase` etc: Simple string functions that that do not require any additional arguments(`%5`). Currently supported are `toLowerCase`, `toUpperCase`, and `trim`.
 
 
-##### Example for user-defined wildcards
+    `flags` is an optional parameter for both searching and replacing and corresponds to [flags for regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_Searching_With_Flags) in javascript (default: `"g"`).
+
+4. Finally, the wildcard `%5` illustrates a complex combination of operations (completely arbitrary).
+
+
+#### Example for user-defined wildcards
 
 ````json
 {
@@ -111,56 +122,71 @@ All wildcards are now defined in the hidden preference `zotfile.wildcards.defaul
     },
     "3": {
         "field": "title",
-        "regex": "([\\w ,-]{1,50})[:\\.?!]?",
-        "group": 1
+        "operations": [{
+            "function":"exec",
+            "regex": "([\\w ,-]{1,50})[:\\.?!]?",
+            "group": 1
+        }]
     },
     "4": {
         "field":"dateAdded",
-        "replace": {
+        "operations": [{
+            "function": "replace",
             "regex": "(\\d{4})-(\\d{2})-(\\d{2})(.*)",
             "replacement": "$1$2$3",
             "flags":"g"
-        },
+        }]
     },
     "5": {
         "default": {
             "field": "title",
-            "replace": {
-                "regex": "(\\d{4})-(\\d{2})-(\\d{2})(.*)",
-                "replacement": "$1$2$3"
-            },
-            "regex": "([\\w ,-]{1,10})[:\\.?!]?",
-            "group": 1,
-            "transform": "upperCase"
+            "operations": [
+                {
+                    "function":"replace",
+                    "regex": "\\d",
+                    "replacement": ""
+                },
+                {
+                    "function": "exec",
+                    "regex": "([\\w ,-]{1,10})[:\\.?!]?",
+                    "group": 1
+                },
+                {
+                    "function": "toUpperCase"
+                },
+                {
+                    "function": "trim"
+                }
+            ]
         },
         "journalArticle": "publicationTitle"
     }
 }
 ````
 
-##### Item types and field names
+#### Item types and field names
 
 A complete list of Zotero fields is available [here](https://api.zotero.org/itemFields?pprint=1) and all the item types are [here](https://api.zotero.org/itemTypes?pprint=1). The fields for each item type are listed on [this page](http://aurimasv.github.io/z2csl/typeMap.xml). Zotfile defines a number of *additional fields* that can be used as part of wildcards: `itemType` is the language specific item type, `formatedTitle` is the title formatted using the options defined in the zofile preferences, `author` is the author string formatted using the zotfile preferences, `authorLastF` is the author string formatted as LastnameF, and `authorInitials` are the initial of the authors.
 
-##### Formatting rules
+#### Formatting rules
 There are a couple of formatting rules for the user-defined wildcards:
 
 - Wildcards can only be one character
 - Use double escape characters in regular expression so that a `\d` becomes `\\d`
 - Always use `"` never `'`
 
-Check out `zotfile.wildcards.default` for more examples (see below). Finally, the JSON has to be reformatted to one line that can be pasted into the preference field in `about:config`.
+Most importantly, [validate your json](http://jsonlint.com). Check out `zotfile.wildcards.default` for more examples (see below). Finally, the JSON has to be reformatted to one line that can be pasted into the preference field in `about:config`. Here is the example from above:
 
-`{"1": "publicationTitle", "2": {"default": "publicationTitle", "book": "publisher", "bookSection": "publisher"}, "3": {"field": "title", "regex": "([\\w ,-]{1,50})[:\\.?!]?", "group": 1 }, "4": {"default": {"field": "title", "regex": "([\\w ,-]{1,10})[:\\.?!]?", "group": 1, "transform": "upperCase"}, "journalArticle": "publicationTitle"} }`
+`{"1": "publicationTitle", "2": {"default": "publicationTitle", "book": "publisher", "bookSection": "publisher"}, "3": {"field": "title", "operations": [{"function":"exec", "regex": "([\\w ,-]{1,50})[:\\.?!]?", "group": 1 }] }, "4": {"field":"dateAdded", "operations": [{"function": "replace", "regex": "(\\d{4})-(\\d{2})-(\\d{2})(.*)", "replacement": "$1$2$3", "flags":"g"}] }, "5": {"default": {"field": "title", "operations": [{"function":"replace", "regex": "\\d", "replacement": ""}, {"function": "exec", "regex": "([\\w ,-]{1,10})[:\\.?!]?", "group": 1 }, {"function": "toUpperCase"}, {"function": "trim"} ] }, "journalArticle": "publicationTitle"} }`
 
-You can use a javascript console such as Firefox's Scratchpad to test whether the JSON is properly
+You can use a javascript console such as Firefox's Scratchpad to test whether the JSON is properly formatted:
 ````javascript
-wildcard = '{"1": "publicationTitle", "2": {"default": "publicationTitle", "book": "publisher", "bookSection": "publisher"}, "3": {"field": "title", "regex": "([\\w ,-]{1,50})[:\\.?!]?", "group": 1 }, "4": {"default": {"field": "title", "regex": "([\\w ,-]{1,10})[:\\.?!]?", "group": 1, "transform": "upperCase"}, "journalArticle": "publicationTitle"} }';
+wildcard = '{"1": "publicationTitle"}';
 JSON.parse(wildcard)
 ````
 
 
-##### Default setting of `zotfile.wildcards.default`
+#### Default setting of `zotfile.wildcards.default`
 
 Note that the information here might not be up to date. As a formated JSON:
 ````json
@@ -168,9 +194,13 @@ Note that the information here might not be up to date. As a formated JSON:
     "a": "author",
     "A": {
         "field": "author",
-        "regex": "\\w{1}",
-        "group": 0,
-        "transform": "upperCase"
+        "operations":[{
+            "function": "exec",
+            "regex": "\\w{1}"
+        },
+        {
+            "function":"toUpperCase"
+        }]
     },
     "F": "authorLastF",
     "I": "authorInitials",
@@ -203,8 +233,10 @@ Note that the information here might not be up to date. As a formated JSON:
             "default": "date",
             "patent": "issueDate"
         },
-        "regex": "\\d{4}",
-        "group": 0
+        "operations":[{
+            "function": "exec",
+            "regex": "\\\\d{4}"
+        }]
     },
     "v": "volume",
     "e": "issue",
@@ -216,7 +248,7 @@ Note that the information here might not be up to date. As a formated JSON:
 
 In one line so that you can copy it to `zotfile.wildcards.default` if you screw up:
 
-`{"a": "author", "A": {"field": "author", "regex": "\\w{1}", "group": 0, "transform": "upperCase"}, "F": "authorLastF", "I": "authorInitials", "t": "titleFormated", "h": "shortTitle", "j": "publicationTitle", "s": "journalAbbreviation", "p": "publisher", "w": {"default": "publisher", "audioRecording": "label", "bill": "legislativeBody", "case": "court", "computerProgram": "company", "film": "distributor", "journalArticle": "publicationTitle", "magazineArticle": "publicationTitle", "newspaperArticle": "publicationTitle", "patent": "issuingAuthority", "presentation": "meetingName", "radioBroadcast": "network", "report": "institution", "thesis": "university", "tvBroadcast": "network"}, "n": "patentNumber", "i": "assignee", "y": {"field": {"default": "date", "patent": "issueDate"}, "regex": "\\d{4}", "group": 0 }, "v": "volume", "e": "issue", "T": "itemType", "f": "pages", "x": "extra"}`
+`{"a": "author", "A": {"field": "author", "operations":[{"function":"exec","regex": "\\w{1}"},{"function":"toUpperCase"}]}, "F": "authorLastF", "I": "authorInitials", "t": "titleFormated", "h": "shortTitle", "j": "publicationTitle", "s": "journalAbbreviation", "p": "publisher", "w": {"default": "publisher", "audioRecording": "label", "bill": "legislativeBody", "case": "court", "computerProgram": "company", "film": "distributor", "journalArticle": "publicationTitle", "magazineArticle": "publicationTitle", "newspaperArticle": "publicationTitle", "patent": "issuingAuthority", "presentation": "meetingName", "radioBroadcast": "network", "report": "institution", "thesis": "university", "tvBroadcast": "network"}, "n": "patentNumber", "i": "assignee", "y": {"field": {"default": "date", "patent": "issueDate"}, "operations":[{"function":"exec","regex": "\\d{4}"}]}, "v": "volume", "e": "issue", "T": "itemType", "f": "pages", "x": "extra"}`
 
 ### HIDDEN OPTIONS
 Zotfile has a number of hidden options that allow you to further configure zotfile. You can access the hidden options through about:config. In Zotero Firefox, type `about:config` in the url bar. In Zotero Standalone, go to Actions->Preferences->Advanced->Open `about:config`.
@@ -266,7 +298,7 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 
 #### Changes in 3.1
 
-- User-defined wildcards ([description](#user-definedwildcards))
+- User-defined wildcards ([documentation](#user-definedwildcards))
 - watch folder now adds an attachment and retrieves metadata if no file is selected
   (change message, change version)
 - The `%w` wildcard now maps to the correct field for most item types
