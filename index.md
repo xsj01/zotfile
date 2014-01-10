@@ -13,7 +13,7 @@ To read and annotate PDF attachments on your mobile device, zotfile can sync PDF
 #### ★ Extract Annotations from  PDF Files
 After highlighting and annotating pdfs on your tablet (or with the PDF reader application on your computer), ZotFile can automatically extract the highlighted text and note annotations from the pdf. The extracted text is saved in a Zotero note. Thanks to Joe Devietti, this feature is now available on all platforms based on the pdf.js library.
 
-![pdf annotation and highlight extraction](pics/pdf-annotation-full.png)
+![](pics/pdf-annotation-full.png)
 
 ### INSTALL ZOTFILE
 
@@ -38,7 +38,7 @@ You can now start sending pdfs (or other files) to your tablet. Simply right-cli
 
 ### RENAMING RULES
 
-![preference window](pics/zotfile-reader-rename.jpg)
+![](pics/zotfile-reader-rename.jpg)
 
 ZotFile renames files based on bibliographic information from the currently selected Zotero item. You can change the renaming rules in the zotfile preference window under renaming rules (Zotero Actions -> ZotFile Preferences). The option 'Renaming Format' allows you to create custom renaming rules using wildcards, which are replaced by metadata from the selected Zotero item. Zotfile also supports optional and exclusive wild-cards. Optional wild-cards mean that `{-%y}` only includes the seperator `-` in the filename if `%y` is defined. Exclusive wild-cards such as `%s|%j` will generate the entry for `%s` if that exists and the entry for `%j` otherwise. Other characters between the wildcards and the bar are ignored (`%s | stuff %j | - more %p` is equivalent to `%s|%j|%p`). Some examples are below.
 
