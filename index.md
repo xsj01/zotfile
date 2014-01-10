@@ -15,7 +15,7 @@ After highlighting and annotating pdfs on your tablet (or with the PDF reader ap
 
 ![pdf annotation and highlight extraction](pics/pdf-annotation-full.png)
 
-### HOW TO INSTALL &amp; SET UP ZOTFILE
+### INSTALL ZOTFILE
 
 To start using zotfile, make sure that Zotero is installed and follow these simple steps:
 
@@ -151,52 +151,52 @@ JSON.parse(wildcard)
 Note that the information here might not be up to date. As a formated JSON:
 ````json
 {
-  "a": "author",
-  "A": {
-    "field": "author",
-    "regex": "\\w{1}",
-    "group": 0,
-    "transform": "upperCase"
-  },
-  "F": "authorLastF",
-  "I": "authorInitials",
-  "t": "titleFormated",
-  "h": "shortTitle",
-  "j": "publicationTitle",
-  "s": "journalAbbreviation",
-  "p": "publisher",
-  "w": {
-    "default": "publisher",
-    "audioRecording": "label",
-    "bill": "legislativeBody",
-    "case": "court",
-    "computerProgram": "company",
-    "film": "distributor",
-    "journalArticle": "publicationTitle",
-    "magazineArticle": "publicationTitle",
-    "newspaperArticle": "publicationTitle",
-    "patent": "issuingAuthority",
-    "presentation": "meetingName",
-    "radioBroadcast": "network",
-    "report": "institution",
-    "thesis": "university",
-    "tvBroadcast": "network"
-  },
-  "n": "patentNumber",
-  "i": "assignee",
-  "y": {
-    "field": {
-      "default": "date",
-      "patent": "issueDate"
+    "a": "author",
+    "A": {
+        "field": "author",
+        "regex": "\\w{1}",
+        "group": 0,
+        "transform": "upperCase"
     },
-    "regex": "\\d{4}",
-    "group": 0
-  },
-  "v": "volume",
-  "e": "issue",
-  "T": "itemType",
-  "f": "pages",
-  "x": "extra"
+    "F": "authorLastF",
+    "I": "authorInitials",
+    "t": "titleFormated",
+    "h": "shortTitle",
+    "j": "publicationTitle",
+    "s": "journalAbbreviation",
+    "p": "publisher",
+    "w": {
+        "default": "publisher",
+        "audioRecording": "label",
+        "bill": "legislativeBody",
+        "case": "court",
+        "computerProgram": "company",
+        "film": "distributor",
+        "journalArticle": "publicationTitle",
+        "magazineArticle": "publicationTitle",
+        "newspaperArticle": "publicationTitle",
+        "patent": "issuingAuthority",
+        "presentation": "meetingName",
+        "radioBroadcast": "network",
+        "report": "institution",
+        "thesis": "university",
+        "tvBroadcast": "network"
+    },
+    "n": "patentNumber",
+    "i": "assignee",
+    "y": {
+        "field": {
+            "default": "date",
+            "patent": "issueDate"
+        },
+        "regex": "\\d{4}",
+        "group": 0
+    },
+    "v": "volume",
+    "e": "issue",
+    "T": "itemType",
+    "f": "pages",
+    "x": "extra"
 }
 ````
 
