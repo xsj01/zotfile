@@ -83,18 +83,20 @@ Abbott, Andrew, and Alexandra Hrycak (1990): Measuring Resemblance in Sequence D
 - `%a_%y_%t`: Abbott_1990_Measuring
 
 ### USER-DEFINED WILDCARDS
-All wildcards are now defined in the hidden preference `zotfile.wildcards.default` and can be changed by the user. But I **strongly** suggest that you do not change this preference. Instead, there is a second hidden preference  `zotfile.wildcards.user` that allows you to add and overwrite wildcards (hidden preference can be changed in `about:config`). This is a preference is for advanced user without any error checking so be careful what you do! By default, `zotfile.wildcards.user` is set to `{}` so that no user wildcards are defined. Below is an example JSON that defines wildcards for `%1`, `%2`, `%3`, `%4` illustrating all the possibilities:
+All wildcards are now defined in the hidden preference `zotfile.wildcards.default` and can be changed by the user. But I **strongly** suggest that you do not change this preference. Instead, there is a second hidden preference  `zotfile.wildcards.user` that allows you to add and overwrite wildcards (hidden preference can be changed in `about:config`). This is a preference is for advanced user without any error checking so be careful what you do! By default, `zotfile.wildcards.user` is set to `{}` so that no user wildcards are defined. Below is an example JSON that defines wildcards for `%1`, `%2`, `%3`, `%4`, and `%5` illustrating all the possibilities:
 
 1. String with the name of Zotero field (`%1`)
 2. JSON with item type specific field names (`%2`)
 
     Always include a `default` value. Otherwise this is not going to work. A list of all item types is available [here](https://api.zotero.org/itemTypes?pprint=1).
 
-3. JSON with three elements for field, regular expression, and group (`%3`)
+3. JSON with <code>field</code> element and transformations based on regular expressions (`%3` and `%4`)
 
-    ZotFile uses the specified `field` as an input string, searches for a match using the regular expression `regex` based on the [exec() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec), and returns the element specified in `group` so that `0` returns the matched text and higher values the corresponding capturing parenthesis. If the match fails, Zotfile uses the original field data. The value of `field` can either be the name of a Zotero field such as `title` or a javascript object with item type specific field names (see 2). You can also add a fourth optional element `transform`, which converts the output to lower case `lowerCase`, to upper case `upperCase`, or trims it `trim`.
+    ZotFile uses the specified <code>field</code> as an input string and then (a) searches for matches (`%3`) and/or (b) replaces matches of a pattern using regular expressions (`%4`). To search for matches, zotfile uses the [exec() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) based on the regular expression defined in `regex`, and returns the element specified in `group` so that `0` returns the matched text and higher values the corresponding capturing parenthesis (`group` is optional with `0` as default). If the match fails, Zotfile uses the original field data. To replace matches, zotfile uses the [replace() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace) and the regular expression and replacement string specified in the `replace` element. The replacement string can include `$n` for the *n*th parenthesized submatch string and other special replacement patterns (see [replace() documentationn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)). The wildcard `%4`, for example, takes the date when an item was added, which is formatted like this `2012-02-18 02:31:37`, and returns `20120218`. `flags` is an optional parameter for both searching and replacing and corresponds to [flags for regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_Searching_With_Flags) in javascript (default: `"g"`).
 
-4. Finally, the wildcard `%4` combines item type specific field names with regular expression.
+    The value of `field` can either be the name of a Zotero field such as `title` or a javascript object with item type specific field names (see 2). You can also add a fourth optional element `transform`, which converts the output to lower case `lowerCase`, to upper case `upperCase`, or trims it `trim`.
+
+4. Finally, the wildcard `%5` combines item type specific field names with regular expression in a completely arbitrary way. Note that the replacement operation is always performed first.
 
 
 ##### Example for user-defined wildcards
@@ -113,8 +115,20 @@ All wildcards are now defined in the hidden preference `zotfile.wildcards.defaul
         "group": 1
     },
     "4": {
+        "field":"dateAdded",
+        "replace": {
+            "regex": "(\\d{4})-(\\d{2})-(\\d{2})(.*)",
+            "replacement": "$1$2$3",
+            "flags":"g"
+        },
+    },
+    "5": {
         "default": {
             "field": "title",
+            "replace": {
+                "regex": "(\\d{4})-(\\d{2})-(\\d{2})(.*)",
+                "replacement": "$1$2$3"
+            },
             "regex": "([\\w ,-]{1,10})[:\\.?!]?",
             "group": 1,
             "transform": "upperCase"
@@ -252,7 +266,7 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 
 #### Changes in 3.1
 
-- User-defined wildcards
+- User-defined wildcards ([description](#user-definedwildcards))
 - watch folder now adds an attachment and retrieves metadata if no file is selected
   (change message, change version)
 - The `%w` wildcard now maps to the correct field for most item types
@@ -341,7 +355,7 @@ Other small fixes mainly for Italian translation, restriction of saved searches 
 
 `{%a-}{%y-}{%s|%j}` - `author-2001-PNAS` or `author-2001-Proceedings...` if `%s` is empty
 
-For full description, see [updated zotfile website](#renaming-rules).
+For full description, see [renaming rules](#renamingrules).
 
 #### Changes in 2.2.3
 
