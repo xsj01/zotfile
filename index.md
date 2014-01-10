@@ -166,7 +166,7 @@ All wildcards are now defined in the hidden preference `zotfile.wildcards.defaul
 
 #### Item types and field names
 
-A complete list of Zotero fields is available [here](https://api.zotero.org/itemFields?pprint=1) and all the item types are [here](https://api.zotero.org/itemTypes?pprint=1). The fields for each item type are listed on [this page](http://aurimasv.github.io/z2csl/typeMap.xml). Zotfile defines a number of *additional fields* that can be used as part of wildcards: `itemType` is the language specific item type, `formatedTitle` is the title formatted using the options defined in the zofile preferences, `author` is the author string formatted using the zotfile preferences, `authorLastF` is the author string formatted as LastnameF, and `authorInitials` are the initial of the authors.
+A complete list of Zotero fields is available [here](https://api.zotero.org/itemFields?pprint=1) (`dateModified` and `dateAdded` seem to be missing from that list) and all the item types are [here](https://api.zotero.org/itemTypes?pprint=1). The fields for each item type are listed on [this page](http://aurimasv.github.io/z2csl/typeMap.xml). Zotfile defines a number of *additional fields* that can be used as part of wildcards: `itemType` is the language specific item type, `formatedTitle` is the title formatted using the options defined in the zofile preferences, `author` is the author string formatted using the zotfile preferences, `authorLastF` is the author string formatted as LastnameF, and `authorInitials` are the initial of the authors.
 
 #### Formatting rules
 There are a couple of formatting rules for the user-defined wildcards:
@@ -301,6 +301,7 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 - User-defined wildcards ([documentation](#user-definedwildcards))
 - watch folder now adds an attachment and retrieves metadata if no file is selected
   (change message, change version)
+- fix pdf.js issue with some pdf annotation (see [this](https://forums.zotero.org/discussion/31903/extract-pdf-annotations-message-hangs-on-linuxubuntu/#Comment_177201) discussion)
 - The `%w` wildcard now maps to the correct field for most item types
 - The `%u` wildcard was removed (use `%y` instead)
 - Choose the number of authors to display when truncating authors during renaming (thanks to bwiernik)
