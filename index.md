@@ -299,7 +299,7 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 #### Changes in 3.1
 
 - New zotfile webpage at [www.zotfile.com](http://www.zotfile.com/) (please update links)
-- User-defined wildcards ([documentation](#user-definedwildcards))
+- User-defined wildcards ([documentation](#user-defined-wildcards))
 - watch folder now adds an attachment and retrieves metadata if no file is selected
   (change message, change version)
 - fix pdf.js issue with some pdf annotation (see [this](https://forums.zotero.org/discussion/31903/extract-pdf-annotations-message-hangs-on-linuxubuntu/#Comment_177201) discussion)
@@ -389,7 +389,7 @@ Other small fixes mainly for Italian translation, restriction of saved searches 
 
 `{%a-}{%y-}{%s|%j}` - `author-2001-PNAS` or `author-2001-Proceedings...` if `%s` is empty
 
-For full description, see [renaming rules](#renamingrules).
+For full description, see [renaming rules](#renaming-rules).
 
 #### Changes in 2.2.3
 
