@@ -83,7 +83,7 @@ Abbott, Andrew, and Alexandra Hrycak (1990): Measuring Resemblance in Sequence D
 - `%a_%y_%t`: Abbott_1990_Measuring
 
 ### USER-DEFINED WILDCARDS
-All wildcards are now defined in the hidden preference `zotfile.wildcards.default` and can be changed by the user. But I **strongly** suggest that you do not change this preference. Instead, there is a second hidden preference  `zotfile.wildcards.user`, which allows you to add and overwrite wildcards (hidden preference can be changed in `about:config`). This is a preference for advanced users without any error checking. Be careful what you do and validate your JSON using [this site](http://jsonlint.com)! By default, `zotfile.wildcards.user` is set to `{}` so that no user wildcards are defined. Below is an example JSON that defines wildcards for `%1`, `%2`, `%3`, `%4`, and `%5` illustrating all the possibilities:
+All wildcards are now defined in the hidden preference `zotfile.wildcards.default` and can be changed by the user. But I **strongly** suggest that you do not change this preference. Instead, there is a second hidden preference  `zotfile.wildcards.user`, which allows you to add and overwrite wildcards (hidden preference can be changed in `about:config`). This is a preference for advanced users without any error checking. Be careful what you do and validate your JSON using [this site](http://pro.jsonlint.com/)! By default, `zotfile.wildcards.user` is set to `{}` so that no user wildcards are defined. Below is an example JSON that defines wildcards for `%1`, `%2`, `%3`, `%4`, and `%5` illustrating all the possibilities:
 
 1. String with the name of Zotero field (`%1`)
 2. JSON with item type specific field names (`%2`)
@@ -175,7 +175,7 @@ There are a couple of formatting rules for the user-defined wildcards:
 - Use double escape characters in regular expression so that a `\d` becomes `\\d`
 - Always use `"` never `'`
 
-Most importantly, [validate your json](http://jsonlint.com). Check out `zotfile.wildcards.default` for more examples (see below). Finally, the JSON has to be reformatted to one line that can be pasted into the preference field in `about:config`. Here is the example from above:
+Most importantly, [validate your json](http://pro.jsonlint.com/). Check out `zotfile.wildcards.default` for more examples (see below). Finally, the JSON has to be reformatted to one line that can be pasted into the preference field in `about:config`. Here is the example from above:
 
 `{"1": "publicationTitle", "2": {"default": "publicationTitle", "book": "publisher", "bookSection": "publisher"}, "3": {"field": "title", "operations": [{"function":"exec", "regex": "([\\w ,-]{1,50})[:\\.?!]?", "group": 1 }] }, "4": {"field":"dateAdded", "operations": [{"function": "replace", "regex": "(\\d{4})-(\\d{2})-(\\d{2})(.*)", "replacement": "$1$2$3", "flags":"g"}] }, "5": {"default": {"field": "title", "operations": [{"function":"replace", "regex": "\\d", "replacement": ""}, {"function": "exec", "regex": "([\\w ,-]{1,10})[:\\.?!]?", "group": 1 }, {"function": "toUpperCase"}, {"function": "trim"} ] }, "journalArticle": "publicationTitle"} }`
 
