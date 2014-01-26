@@ -434,6 +434,11 @@ Optional parameters: <code>flags</code> (default <code>"g"</code>)</p></li>
 
 <p>With this option, zotfile extracts PDF annotations twice using both pdf.js and poppler. This option only works on Mac OS when the poppler based extraction script is installed.</p>
 </li>
+<li>
+<p><code>info_window_duration</code>, <code>info_window_duration_clickable</code></p>
+
+<p>Duration (in milliseconds) for which the info windows show up.</p>
+</li>
 </ul><h3>
 <a name="reporting-a-bug" class="anchor" href="#reporting-a-bug"><span class="octicon octicon-link"></span></a>REPORTING A BUG</h3>
 
@@ -447,15 +452,15 @@ Optional parameters: <code>flags</code> (default <code>"g"</code>)</p></li>
 
 <ul>
 <li>New zotfile webpage at <a href="http://www.zotfile.com/">www.zotfile.com</a> (please update links)</li>
-<li>User-defined wildcards (<a href="#user-defined-wildcards">documentation</a>)</li>
+<li>User-defined wildcards</li>
 <li>watch folder now adds an attachment and retrieves metadata if no file is selected
 (change message, change version)</li>
 <li>fix pdf.js issue with some pdf annotation (see <a href="https://forums.zotero.org/discussion/31903/extract-pdf-annotations-message-hangs-on-linuxubuntu/#Comment_177201">this</a> discussion)</li>
+<li>New hidden preferences for duration of info windows (<code>info_window_duration</code> and <code>info_window_duration_clickable</code>)</li>
 <li>The <code>%w</code> wildcard now maps to the correct field for most item types</li>
-<li>The <code>%u</code> wildcard was removed (use <code>%y</code> instead)</li>
+<li>The <code>%u</code> wildcard as redundant (use <code>%y</code> instead)</li>
 <li>Choose the number of authors to display when truncating authors during renaming (thanks to bwiernik)</li>
 <li>fix problem that small info window does not disappear</li>
-<li>fix <code>TypeError: f.exists</code> error</li>
 </ul><h4>
 <a name="changes-in-303" class="anchor" href="#changes-in-303"><span class="octicon octicon-link"></span></a>Changes in 3.0.3</h4>
 

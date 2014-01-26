@@ -290,6 +290,10 @@ Search for `extensions.zotfile` to see a list of the hidden zotfile options. Her
 
     With this option, zotfile extracts PDF annotations twice using both pdf.js and poppler. This option only works on Mac OS when the poppler based extraction script is installed.
 
+- `info_window_duration`, `info_window_duration_clickable`
+
+    Duration (in milliseconds) for which the info windows show up.
+
 ### REPORTING A BUG
 
 You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/5301/6/zotfile-zotero-plugin-to-rename-move-and-attach-pdfs-send-them-to-ipad-extract-pdf-annotations/) in the Zotero forum. Please provide information about about your system (Windows, Mac OS, Linux etc) as well as your Zotfile, Zotero and Firefox version. Also make sure that you can reproduce the bug and describe the steps as closely as possible. In addition, any information from the Error Console are very helpful. You can check the Error Console in Zotero for Firefox by going to 'Tools->Web Dev.->Error Console' in Firefox and look for any zotfile related stuff after the bug occurred. For zotfile bugs,  the 'Source File' should be something like `chrome://zotfile/content/...` (most likely zotfile.js). You can also clear the console, execute the actions that caused the problem and then check again. If I ask you to provide a Report ID, follow the instructions [here](http://www.zotero.org/support/reporting_bugs).
@@ -299,15 +303,15 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 #### Changes in 3.1
 
 - New zotfile webpage at [www.zotfile.com](http://www.zotfile.com/) (please update links)
-- User-defined wildcards ([documentation](#user-defined-wildcards))
+- User-defined wildcards
 - watch folder now adds an attachment and retrieves metadata if no file is selected
   (change message, change version)
 - fix pdf.js issue with some pdf annotation (see [this](https://forums.zotero.org/discussion/31903/extract-pdf-annotations-message-hangs-on-linuxubuntu/#Comment_177201) discussion)
+- New hidden preferences for duration of info windows (`info_window_duration` and `info_window_duration_clickable`)
 - The `%w` wildcard now maps to the correct field for most item types
-- The `%u` wildcard was removed (use `%y` instead)
+- The `%u` wildcard as redundant (use `%y` instead)
 - Choose the number of authors to display when truncating authors during renaming (thanks to bwiernik)
 - fix problem that small info window does not disappear
-- fix `TypeError: f.exists` error
 
 #### Changes in 3.0.3
 
