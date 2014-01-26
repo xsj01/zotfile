@@ -211,7 +211,7 @@ You can now start sending pdfs (or other files) to your tablet. Simply right-cli
 </ul><h3>
 <a name="user-defined-wildcards" class="anchor" href="#user-defined-wildcards"><span class="octicon octicon-link"></span></a>USER-DEFINED WILDCARDS</h3>
 
-<p>All wildcards are now defined in the hidden preference <code>zotfile.wildcards.default</code> and can be changed by the user. But I <strong>strongly</strong> suggest that you do not change this preference. Instead, there is a second hidden preference  <code>zotfile.wildcards.user</code>, which allows you to add and overwrite wildcards (hidden preference can be changed in <code>about:config</code>). This is a preference for advanced users without any error checking. Be careful what you do and validate your JSON using <a href="http://jsonlint.com">this site</a>! By default, <code>zotfile.wildcards.user</code> is set to <code>{}</code> so that no user wildcards are defined. Below is an example JSON that defines wildcards for <code>%1</code>, <code>%2</code>, <code>%3</code>, <code>%4</code>, and <code>%5</code> illustrating all the possibilities:</p>
+<p>All wildcards are now defined in the hidden preference <code>zotfile.wildcards.default</code> and can be changed by the user. But I <strong>strongly</strong> suggest that you do not change this preference. Instead, there is a second hidden preference  <code>zotfile.wildcards.user</code>, which allows you to add and overwrite wildcards (hidden preference can be changed in <code>about:config</code>). This is a preference for advanced users without any error checking. Be careful what you do and validate your JSON using <a href="http://pro.jsonlint.com/">this site</a>! By default, <code>zotfile.wildcards.user</code> is set to <code>{}</code> so that no user wildcards are defined. Below is an example JSON that defines wildcards for <code>%1</code>, <code>%2</code>, <code>%3</code>, <code>%4</code>, and <code>%5</code> illustrating all the possibilities:</p>
 
 <ol>
 <li>String with the name of Zotero field (<code>%1</code>)</li>
@@ -308,7 +308,7 @@ Optional parameters: <code>flags</code> (default <code>"g"</code>)</p></li>
 </li>
 <li>Always use <code>"</code> never <code>'</code>
 </li>
-</ul><p>Most importantly, <a href="http://jsonlint.com">validate your json</a>. Check out <code>zotfile.wildcards.default</code> for more examples (see below). Finally, the JSON has to be reformatted to one line that can be pasted into the preference field in <code>about:config</code>. Here is the example from above:</p>
+</ul><p>Most importantly, <a href="http://pro.jsonlint.com/">validate your json</a>. Check out <code>zotfile.wildcards.default</code> for more examples (see below). Finally, the JSON has to be reformatted to one line that can be pasted into the preference field in <code>about:config</code>. Here is the example from above:</p>
 
 <p><code>{"1": "publicationTitle", "2": {"default": "publicationTitle", "book": "publisher", "bookSection": "publisher"}, "3": {"field": "title", "operations": [{"function":"exec", "regex": "([\\w ,-]{1,50})[:\\.?!]?", "group": 1 }] }, "4": {"field":"dateAdded", "operations": [{"function": "replace", "regex": "(\\d{4})-(\\d{2})-(\\d{2})(.*)", "replacement": "$1$2$3", "flags":"g"}] }, "5": {"default": {"field": "title", "operations": [{"function":"replace", "regex": "\\d", "replacement": ""}, {"function": "exec", "regex": "([\\w ,-]{1,10})[:\\.?!]?", "group": 1 }, {"function": "toUpperCase"}, {"function": "trim"} ] }, "journalArticle": "publicationTitle"} }</code></p>
 
