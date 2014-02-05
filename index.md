@@ -47,6 +47,7 @@ ZotFile renames files based on bibliographic information from the currently sele
 - `%I` author initials.
 - `%F` author's last name with first letter of first name (e.g. EinsteinA).
 - `%A` first letter of author (useful for subfolders)
+- `%d`,`%D`, `%L`, `%l` wildcards for editors, same as for authors.
 - `%y` year (extracted from Date field)
 - `%t` title. Usually truncated after : . ? The maximal length of the remaining part of the title can be changed.
 - `%T` item type (localized)
@@ -186,69 +187,88 @@ JSON.parse(wildcard)
 ````
 
 
-#### Default setting of `zotfile.wildcards.default`
+#### Default setting for `zotfile.wildcards.default`
 
 Note that the information here might not be up to date. As a formated JSON:
 ````json
 {
-    "a": "author",
-    "A": {
-        "field": "author",
-        "operations":[{
-            "function": "exec",
-            "regex": "\\w{1}"
-        },
-        {
-            "function":"toUpperCase"
-        }]
+  "a": "author",
+  "A": {
+    "field": "author",
+    "operations": [
+      {
+        "function": "exec",
+        "regex": "\\\\w{1}"
+      },
+      {
+        "function": "toUpperCase"
+      }
+    ]
+  },
+  "F": "authorLastF",
+  "I": "authorInitials",
+  "d": "editor",
+  "D": {
+    "field": "editor",
+    "operations": [
+      {
+        "function": "exec",
+        "regex": "\\\\w{1}"
+      },
+      {
+        "function": "toUpperCase"
+      }
+    ]
+  },
+  "L": "editorLastF",
+  "l": "editorInitials",
+  "t": "titleFormated",
+  "h": "shortTitle",
+  "j": "publicationTitle",
+  "s": "journalAbbreviation",
+  "p": "publisher",
+  "w": {
+    "default": "publisher",
+    "audioRecording": "label",
+    "bill": "legislativeBody",
+    "case": "court",
+    "computerProgram": "company",
+    "film": "distributor",
+    "journalArticle": "publicationTitle",
+    "magazineArticle": "publicationTitle",
+    "newspaperArticle": "publicationTitle",
+    "patent": "issuingAuthority",
+    "presentation": "meetingName",
+    "radioBroadcast": "network",
+    "report": "institution",
+    "thesis": "university",
+    "tvBroadcast": "network"
+  },
+  "n": "patentNumber",
+  "i": "assignee",
+  "y": {
+    "field": {
+      "default": "date",
+      "patent": "issueDate"
     },
-    "F": "authorLastF",
-    "I": "authorInitials",
-    "t": "titleFormated",
-    "h": "shortTitle",
-    "j": "publicationTitle",
-    "s": "journalAbbreviation",
-    "p": "publisher",
-    "w": {
-        "default": "publisher",
-        "audioRecording": "label",
-        "bill": "legislativeBody",
-        "case": "court",
-        "computerProgram": "company",
-        "film": "distributor",
-        "journalArticle": "publicationTitle",
-        "magazineArticle": "publicationTitle",
-        "newspaperArticle": "publicationTitle",
-        "patent": "issuingAuthority",
-        "presentation": "meetingName",
-        "radioBroadcast": "network",
-        "report": "institution",
-        "thesis": "university",
-        "tvBroadcast": "network"
-    },
-    "n": "patentNumber",
-    "i": "assignee",
-    "y": {
-        "field": {
-            "default": "date",
-            "patent": "issueDate"
-        },
-        "operations":[{
-            "function": "exec",
-            "regex": "\\\\d{4}"
-        }]
-    },
-    "v": "volume",
-    "e": "issue",
-    "T": "itemType",
-    "f": "pages",
-    "x": "extra"
+    "operations": [
+      {
+        "function": "exec",
+        "regex": "\\\\d{4}"
+      }
+    ]
+  },
+  "v": "volume",
+  "e": "issue",
+  "T": "itemType",
+  "f": "pages",
+  "x": "extra"
 }
 ````
 
 In one line so that you can copy it to `zotfile.wildcards.default` if you screw up:
 
-`{"a": "author", "A": {"field": "author", "operations":[{"function":"exec","regex": "\\w{1}"},{"function":"toUpperCase"}]}, "F": "authorLastF", "I": "authorInitials", "t": "titleFormated", "h": "shortTitle", "j": "publicationTitle", "s": "journalAbbreviation", "p": "publisher", "w": {"default": "publisher", "audioRecording": "label", "bill": "legislativeBody", "case": "court", "computerProgram": "company", "film": "distributor", "journalArticle": "publicationTitle", "magazineArticle": "publicationTitle", "newspaperArticle": "publicationTitle", "patent": "issuingAuthority", "presentation": "meetingName", "radioBroadcast": "network", "report": "institution", "thesis": "university", "tvBroadcast": "network"}, "n": "patentNumber", "i": "assignee", "y": {"field": {"default": "date", "patent": "issueDate"}, "operations":[{"function":"exec","regex": "\\d{4}"}]}, "v": "volume", "e": "issue", "T": "itemType", "f": "pages", "x": "extra"}`
+`{"a": "author", "A": {"field": "author", "operations":[{"function":"exec","regex": "\\\\w{1}"},{"function":"toUpperCase"}]}, "F": "authorLastF", "I": "authorInitials", "d": "editor", "D": {"field": "editor", "operations":[{"function":"exec","regex": "\\\\w{1}"},{"function":"toUpperCase"}]}, "L": "editorLastF", "l": "editorInitials", "t": "titleFormated", "h": "shortTitle", "j": "publicationTitle", "s": "journalAbbreviation", "p": "publisher", "w": {"default": "publisher", "audioRecording": "label", "bill": "legislativeBody", "case": "court", "computerProgram": "company", "film": "distributor", "journalArticle": "publicationTitle", "magazineArticle": "publicationTitle", "newspaperArticle": "publicationTitle", "patent": "issuingAuthority", "presentation": "meetingName", "radioBroadcast": "network", "report": "institution", "thesis": "university", "tvBroadcast": "network"}, "n": "patentNumber", "i": "assignee", "y": {"field": {"default": "date", "patent": "issueDate"}, "operations":[{"function":"exec","regex": "\\\\d{4}"}]}, "v": "volume", "e": "issue", "T": "itemType", "f": "pages", "x": "extra"}`
 
 ### HIDDEN OPTIONS
 Zotfile has a number of hidden options that allow you to further configure zotfile. You can access the hidden options through about:config. In Zotero Firefox, type `about:config` in the url bar. In Zotero Standalone, go to Actions->Preferences->Advanced->Open `about:config`.
