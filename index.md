@@ -320,6 +320,9 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 
 ### CHANGELOG
 
+#### Changes in 3.1.1
+- New wildcards for editors (`%d`,`%D`, `%L`, `%l`)
+
 #### Changes in 3.1
 
 - New zotfile webpage at [www.zotfile.com](http://www.zotfile.com/) (please update links)
