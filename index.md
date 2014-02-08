@@ -189,7 +189,7 @@ JSON.parse(wildcard)
 
 #### Default setting for `zotfile.wildcards.default`
 
-The information in this file might not be up to date but you can look at the default wildcards and learn something about user-defined wildscards [here](http://zotfile.com/index.html/wildcards-default.json). The minified version in one line is [here](http://zotfile.com/index.html/wildcards-default-min.json) so that you can copy it to `zotfile.wildcards.default` if you screw up.
+The information in this file might not be up to date but you can look at the default wildcards and learn something about user-defined wildscards [here](http://zotfile.com/wildcards-default.json). The minified version in one line is [here](http://zotfile.com/wildcards-default-min.json) so that you can copy it to `zotfile.wildcards.default` if you screw up.
 
 ### EXTRACT PDF ANNOTATIONS
 
