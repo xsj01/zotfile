@@ -69,6 +69,7 @@
             <a class="navi" href="#install-zotfile">Install Zotfile <span class="navi-seperator">&#8226; </span></a>
             <a class="navi" href="#renaming-rules">Renaming Rules <span class="navi-seperator">&#8226; </span></a>
             <a class="navi" href="#user-defined-wildcards">User-Defined Wildcards <span class="navi-seperator">&#8226; </span></a>
+            <a class="navi" href="#extract-pdf-annotations">Extract PDF Annotations <span class="navi-seperator">&#8226; </span></a>
             <a class="navi" href="#hidden-options">Hidden Options <span class="navi-seperator">&#8226; </span></a>
             <a class="navi" href="#reporting-a-bug">Reporting a Bug <span class="navi-seperator">&#8226; </span></a>
             <a class="navi" href="#changelog">Changelog</a>
@@ -108,7 +109,7 @@
 
 <p>After highlighting and annotating pdfs on your tablet (or with the PDF reader application on your computer), ZotFile can automatically extract the highlighted text and note annotations from the pdf. The extracted text is saved in a Zotero note. Thanks to Joe Devietti, this feature is now available on all platforms based on the pdf.js library.</p>
 
-<p><a href="https://github-camo.global.ssl.fastly.net/21fc2de7aacd1126f94e08f55818f76f917c6bd9/687474703a2f2f6a6c6567657769652e6769746875622e696f2f7a6f7466696c652f706963732f7064662d616e6e6f746174696f6e2d66756c6c2e706e67" target="_blank"><img src="https://github-camo.global.ssl.fastly.net/21fc2de7aacd1126f94e08f55818f76f917c6bd9/687474703a2f2f6a6c6567657769652e6769746875622e696f2f7a6f7466696c652f706963732f7064662d616e6e6f746174696f6e2d66756c6c2e706e67" alt="" style="max-width:100%;"></a></p>
+<p><a href="https://github-camo.global.ssl.fastly.net/21fc2de7aacd1126f94e08f55818f76f917c6bd9/687474703a2f2f6a6c6567657769652e6769746875622e696f2f7a6f7466696c652f706963732f7064662d616e6e6f746174696f6e2d66756c6c2e706e67" target="_blank"><img src="https://github-camo.global.ssl.fastly.net/21fc2de7aacd1126f94e08f55818f76f917c6bd9/687474703a2f2f6a6c6567657769652e6769746875622e696f2f7a6f7466696c652f706963732f7064662d616e6e6f746174696f6e2d66756c6c2e706e67" alt="" data-canonical-src="http://jlegewie.github.io/zotfile/pics/pdf-annotation-full.png" style="max-width:100%;"></a></p>
 
 <h3>
 <a name="install-zotfile" class="anchor" href="#install-zotfile"><span class="octicon octicon-link"></span></a>INSTALL ZOTFILE</h3>
@@ -140,7 +141,7 @@ You can now start sending pdfs (or other files) to your tablet. Simply right-cli
 <h3>
 <a name="renaming-rules" class="anchor" href="#renaming-rules"><span class="octicon octicon-link"></span></a>RENAMING RULES</h3>
 
-<p><a href="https://github-camo.global.ssl.fastly.net/fc0119e7e9570ad6c4e6535289fa520f59b2fa55/687474703a2f2f6a6c6567657769652e6769746875622e696f2f7a6f7466696c652f706963732f7a6f7466696c652d7265616465722d72656e616d652e6a7067" target="_blank"><img src="https://github-camo.global.ssl.fastly.net/fc0119e7e9570ad6c4e6535289fa520f59b2fa55/687474703a2f2f6a6c6567657769652e6769746875622e696f2f7a6f7466696c652f706963732f7a6f7466696c652d7265616465722d72656e616d652e6a7067" alt="" style="max-width:100%;"></a></p>
+<p><a href="https://github-camo.global.ssl.fastly.net/fc0119e7e9570ad6c4e6535289fa520f59b2fa55/687474703a2f2f6a6c6567657769652e6769746875622e696f2f7a6f7466696c652f706963732f7a6f7466696c652d7265616465722d72656e616d652e6a7067" target="_blank"><img src="https://github-camo.global.ssl.fastly.net/fc0119e7e9570ad6c4e6535289fa520f59b2fa55/687474703a2f2f6a6c6567657769652e6769746875622e696f2f7a6f7466696c652f706963732f7a6f7466696c652d7265616465722d72656e616d652e6a7067" alt="" data-canonical-src="http://jlegewie.github.io/zotfile/pics/zotfile-reader-rename.jpg" style="max-width:100%;"></a></p>
 
 <p>ZotFile renames files based on bibliographic information from the currently selected Zotero item. You can change the renaming rules in the zotfile preference window under renaming rules (Zotero Actions -&gt; ZotFile Preferences). The option 'Renaming Format' allows you to create custom renaming rules using wildcards, which are replaced by metadata from the selected Zotero item. Zotfile also supports optional and exclusive wild-cards. Optional wild-cards mean that <code>{-%y}</code> only includes the seperator <code>-</code> in the filename if <code>%y</code> is defined. Exclusive wild-cards such as <code>%s|%j</code> will generate the entry for <code>%s</code> if that exists and the entry for <code>%j</code> otherwise. Other characters between the wildcards and the bar are ignored (<code>%s | stuff %j | - more %p</code> is equivalent to <code>%s|%j|%p</code>). Some examples are below.</p>
 
@@ -156,6 +157,8 @@ You can now start sending pdfs (or other files) to your tablet. Simply right-cli
 <code>%F</code> author's last name with first letter of first name (e.g. EinsteinA).</li>
 <li>
 <code>%A</code> first letter of author (useful for subfolders)</li>
+<li>
+<code>%d</code>,<code>%D</code>, <code>%L</code>, <code>%l</code> wildcards for editors, same as for authors.</li>
 <li>
 <code>%y</code> year (extracted from Date field)</li>
 <li>
@@ -319,70 +322,21 @@ Optional parameters: <code>flags</code> (default <code>"g"</code>)</p></li>
 </pre></div>
 
 <h4>
-<a name="default-setting-of-zotfilewildcardsdefault" class="anchor" href="#default-setting-of-zotfilewildcardsdefault"><span class="octicon octicon-link"></span></a>Default setting of <code>zotfile.wildcards.default</code>
+<a name="default-setting-for-zotfilewildcardsdefault" class="anchor" href="#default-setting-for-zotfilewildcardsdefault"><span class="octicon octicon-link"></span></a>Default setting for <code>zotfile.wildcards.default</code>
 </h4>
 
-<p>Note that the information here might not be up to date. As a formated JSON:</p>
+<p>The information in this file might not be up to date but you can look at the default wildcards and learn something about user-defined wildscards <a href="http://zotfile.com/index.html/wildcards-default.json">here</a>. The minified version in one line is <a href="http://zotfile.com/index.html/wildcards-default-min.json">here</a> so that you can copy it to <code>zotfile.wildcards.default</code> if you screw up.</p>
 
-<div class="highlight highlight-json"><pre><span class="p">{</span>
-    <span class="nt">"a"</span><span class="p">:</span> <span class="s2">"author"</span><span class="p">,</span>
-    <span class="nt">"A"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">"field"</span><span class="p">:</span> <span class="s2">"author"</span><span class="p">,</span>
-        <span class="nt">"operations"</span><span class="p">:[{</span>
-            <span class="nt">"function"</span><span class="p">:</span> <span class="s2">"exec"</span><span class="p">,</span>
-            <span class="nt">"regex"</span><span class="p">:</span> <span class="s2">"\\w{1}"</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">"function"</span><span class="p">:</span><span class="s2">"toUpperCase"</span>
-        <span class="p">}]</span>
-    <span class="p">},</span>
-    <span class="nt">"F"</span><span class="p">:</span> <span class="s2">"authorLastF"</span><span class="p">,</span>
-    <span class="nt">"I"</span><span class="p">:</span> <span class="s2">"authorInitials"</span><span class="p">,</span>
-    <span class="nt">"t"</span><span class="p">:</span> <span class="s2">"titleFormated"</span><span class="p">,</span>
-    <span class="nt">"h"</span><span class="p">:</span> <span class="s2">"shortTitle"</span><span class="p">,</span>
-    <span class="nt">"j"</span><span class="p">:</span> <span class="s2">"publicationTitle"</span><span class="p">,</span>
-    <span class="nt">"s"</span><span class="p">:</span> <span class="s2">"journalAbbreviation"</span><span class="p">,</span>
-    <span class="nt">"p"</span><span class="p">:</span> <span class="s2">"publisher"</span><span class="p">,</span>
-    <span class="nt">"w"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">"default"</span><span class="p">:</span> <span class="s2">"publisher"</span><span class="p">,</span>
-        <span class="nt">"audioRecording"</span><span class="p">:</span> <span class="s2">"label"</span><span class="p">,</span>
-        <span class="nt">"bill"</span><span class="p">:</span> <span class="s2">"legislativeBody"</span><span class="p">,</span>
-        <span class="nt">"case"</span><span class="p">:</span> <span class="s2">"court"</span><span class="p">,</span>
-        <span class="nt">"computerProgram"</span><span class="p">:</span> <span class="s2">"company"</span><span class="p">,</span>
-        <span class="nt">"film"</span><span class="p">:</span> <span class="s2">"distributor"</span><span class="p">,</span>
-        <span class="nt">"journalArticle"</span><span class="p">:</span> <span class="s2">"publicationTitle"</span><span class="p">,</span>
-        <span class="nt">"magazineArticle"</span><span class="p">:</span> <span class="s2">"publicationTitle"</span><span class="p">,</span>
-        <span class="nt">"newspaperArticle"</span><span class="p">:</span> <span class="s2">"publicationTitle"</span><span class="p">,</span>
-        <span class="nt">"patent"</span><span class="p">:</span> <span class="s2">"issuingAuthority"</span><span class="p">,</span>
-        <span class="nt">"presentation"</span><span class="p">:</span> <span class="s2">"meetingName"</span><span class="p">,</span>
-        <span class="nt">"radioBroadcast"</span><span class="p">:</span> <span class="s2">"network"</span><span class="p">,</span>
-        <span class="nt">"report"</span><span class="p">:</span> <span class="s2">"institution"</span><span class="p">,</span>
-        <span class="nt">"thesis"</span><span class="p">:</span> <span class="s2">"university"</span><span class="p">,</span>
-        <span class="nt">"tvBroadcast"</span><span class="p">:</span> <span class="s2">"network"</span>
-    <span class="p">},</span>
-    <span class="nt">"n"</span><span class="p">:</span> <span class="s2">"patentNumber"</span><span class="p">,</span>
-    <span class="nt">"i"</span><span class="p">:</span> <span class="s2">"assignee"</span><span class="p">,</span>
-    <span class="nt">"y"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">"field"</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">"default"</span><span class="p">:</span> <span class="s2">"date"</span><span class="p">,</span>
-            <span class="nt">"patent"</span><span class="p">:</span> <span class="s2">"issueDate"</span>
-        <span class="p">},</span>
-        <span class="nt">"operations"</span><span class="p">:[{</span>
-            <span class="nt">"function"</span><span class="p">:</span> <span class="s2">"exec"</span><span class="p">,</span>
-            <span class="nt">"regex"</span><span class="p">:</span> <span class="s2">"\\\\d{4}"</span>
-        <span class="p">}]</span>
-    <span class="p">},</span>
-    <span class="nt">"v"</span><span class="p">:</span> <span class="s2">"volume"</span><span class="p">,</span>
-    <span class="nt">"e"</span><span class="p">:</span> <span class="s2">"issue"</span><span class="p">,</span>
-    <span class="nt">"T"</span><span class="p">:</span> <span class="s2">"itemType"</span><span class="p">,</span>
-    <span class="nt">"f"</span><span class="p">:</span> <span class="s2">"pages"</span><span class="p">,</span>
-    <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"extra"</span>
-<span class="p">}</span>
-</pre></div>
+<h3>
+<a name="extract-pdf-annotations" class="anchor" href="#extract-pdf-annotations"><span class="octicon octicon-link"></span></a>EXTRACT PDF ANNOTATIONS</h3>
 
-<p>In one line so that you can copy it to <code>zotfile.wildcards.default</code> if you screw up:</p>
+<p>Zotfile can extracted annotations and highlighted text from many PDF files. The extracted annotations are saved in Zotero notes and you can go back to the annotation in the pdf by clicking on the link after the extracted text. PDFs are a very complex format and the extraction will never work for all files. If you can not copy &amp; paste meaningful text from the file in your pdf viewer (open your pdf viewer (not the browser plugin), select text, copy and paste it somewhere), zotfile won't be able to extract the highlighted text either. If you can, there is a chance that future versions of zotfile will solve the problem. When you have a pdf file that does not work or with clear spacing problems, feel free to share the file on the <a href="https://forums.zotero.org/discussion/5301/">zotfile thread</a> in the Zotero forum or upload it to the <a href="https://www.zotero.org/groups/zotfile">zotfile Zotero group</a> in the <code>PUT FILES HERE</code> folder. But only share files for which you can copy and paste text! Otherwise you are wasting everyone's time.<br>
+On Mac OS, you can also use poppler to extract pdf annotations (ZotFile Preferences -&gt; Advanced Settings). Currently, pdf.js is more reliable and should be the default in most cases. The poppler-based tool, however, is faster and might handle certain pdf standards that are not yet supported by pdf.js.</p>
 
-<p><code>{"a": "author", "A": {"field": "author", "operations":[{"function":"exec","regex": "\\w{1}"},{"function":"toUpperCase"}]}, "F": "authorLastF", "I": "authorInitials", "t": "titleFormated", "h": "shortTitle", "j": "publicationTitle", "s": "journalAbbreviation", "p": "publisher", "w": {"default": "publisher", "audioRecording": "label", "bill": "legislativeBody", "case": "court", "computerProgram": "company", "film": "distributor", "journalArticle": "publicationTitle", "magazineArticle": "publicationTitle", "newspaperArticle": "publicationTitle", "patent": "issuingAuthority", "presentation": "meetingName", "radioBroadcast": "network", "report": "institution", "thesis": "university", "tvBroadcast": "network"}, "n": "patentNumber", "i": "assignee", "y": {"field": {"default": "date", "patent": "issueDate"}, "operations":[{"function":"exec","regex": "\\d{4}"}]}, "v": "volume", "e": "issue", "T": "itemType", "f": "pages", "x": "extra"}</code></p>
+<h4>
+<a name="goto-annotation-in-pdf" class="anchor" href="#goto-annotation-in-pdf"><span class="octicon octicon-link"></span></a>Goto Annotation in PDF</h4>
+
+<p>Zotfile adds a link to extracted annotations that allows you to open the pdf file at the page with the annotation. Just click on the link after some extracted text and your pdf should open on the correct location. &lt;!-- <strong>For Windows</strong>, Adobe Reader has to be installed. If zotfile has problems finding the path for Adobe Reader, you can set it manually with the hidden option <code>zotfile.pdfExtraction.openPdfWin</code>. If you run into this error <code>There was an error opening this document. Access denied.</code>, check out <a href="http://www.technipages.com/acrobat-reader-11-fix-there-was-an-error-opening-this-document-access-denied">this page</a> for some help. <strong>For Mac OS</strong>, the pdf file opens in preview and zotfile uses some AppleScript to simulate keystrokes. Preview's support for these kind of things is very limited so it might not work perfectly. For example, don't press a key while the pdf is opening. <a href="http://skim-app.sourceforge.net/">Skim</a>, an alternative pdf viewer for Mac OS, works much better! Just set the hidden option <code>zotfile.pdfExtraction.openPdfMac_skim</code> to <code>true</code> and zotfile will open the pdf in Skim. <strong>For Linux</strong>, zotfile first tries <code>okular</code> and then <code>evince</code> but you can also set the <code>zotfile.pdfExtraction.openPdfLinux</code> option to change the default behavior. One example would be <code>/usr/bin/okular -p</code>, which tell zotfile the path and the argument for the page number. --&gt; <strong>On Windows</strong>, zotfile detects the default pdf viewer and opens the pdf on the correct page (not tested for Windows 8). Adobe Reader, Foxit and PDF-XChange all work (other might as well but are untested). Adobe Reader, however, does not jump to the correct page when the file is already open (Foxit and PDF-XChange do). If zotfile is unable to detect the default viewer or you want to force zotfile to use a different viewer, simply change the hidden option <code>zotfile.pdfExtraction.openPdfWin</code> to the desired path (e.g. <code>C:\Program Files\Adobe\Reader 11.0\Reader\AcroRd32.exe</code>). <strong>On Mac OS</strong>, zotfile works with Preview (the default) and Skim. Preview, however, does not support scripting very well and has certain limitations. Don't press any keys while the pdf is opening, for example. <a href="http://skim-app.sourceforge.net/">Skim</a>, an alternative pdf viewer for Mac OS, works much better! Just set the hidden option <code>zotfile.pdfExtraction.openPdfMac_skim</code> to <code>true</code> and zotfile will open the pdf in Skim. <strong>For Linux</strong>, zotfile first tries <code>okular</code> and then <code>evince</code> but you can also set the <code>zotfile.pdfExtraction.openPdfLinux</code> option to change the default behavior. One example would be <code>/usr/bin/okular -p</code>, which tell zotfile the path and the argument for the page number.</p>
 
 <h3>
 <a name="hidden-options" class="anchor" href="#hidden-options"><span class="octicon octicon-link"></span></a>HIDDEN OPTIONS</h3>
@@ -448,6 +402,17 @@ Optional parameters: <code>flags</code> (default <code>"g"</code>)</p></li>
 <a name="changelog" class="anchor" href="#changelog"><span class="octicon octicon-link"></span></a>CHANGELOG</h3>
 
 <h4>
+<a name="changes-in-32" class="anchor" href="#changes-in-32"><span class="octicon octicon-link"></span></a>Changes in 3.2</h4>
+
+<ul>
+<li>
+<p><strong>Goto annotation in pdf</strong></p>
+
+<p>This is not really a new feature but with two recent changes in Zotero (see <a href="https://github.com/zotero/zotero/pull/450">this</a> and <a href="https://github.com/zotero/zotero/pull/452">this</a> pull request), it became much more useful! Simply click on the link that is part of your extracted annotations, and zotfile will open the pdf on the page with the annotation. The feature now works on Windows as well (thanks to aurimasv) and I have added support for Skim on Mac. Check out the <a href="http://zotfile.com/index.html#extract-pdf-annotations">documentation</a> for some more details.</p>
+</li>
+<li><p>New wildcards for editors (<code>%d</code>, <code>%D</code>, <code>%L</code>, <code>%l</code>)</p></li>
+<li>Fix bug with unnecessary suffix after multiple renames of same file</li>
+</ul><h4>
 <a name="changes-in-31" class="anchor" href="#changes-in-31"><span class="octicon octicon-link"></span></a>Changes in 3.1</h4>
 
 <ul>
