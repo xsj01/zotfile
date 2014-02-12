@@ -410,6 +410,11 @@ On Mac OS, you can also use poppler to extract pdf annotations (ZotFile Preferen
 
 <p>This is not really a new feature but with two recent changes in Zotero (see <a href="https://github.com/zotero/zotero/pull/450">this</a> and <a href="https://github.com/zotero/zotero/pull/452">this</a> pull request), it became much more useful! Simply click on the link that is part of your extracted annotations, and zotfile will open the pdf on the page with the annotation. The feature now works on Windows as well (thanks to aurimasv) and I have added support for Skim on Mac. Check out the <a href="http://zotfile.com/index.html#extract-pdf-annotations">documentation</a> for some more details.</p>
 </li>
+<li>
+<p><strong>Improved extraction of annotation</strong></p>
+
+<p>This version includes two improvements for the extraction of annotations. First, the extraction is now based on the most recent pdf.js version (<a href="https://github.com/jlegewie/pdf.js/tree/extract-v3">here</a> is my fork with the modified version of <a href="https://github.com/mozilla/pdf.js">pdf.js</a> used in zotfile). With this update, zotfile should work with more pdfs. Second, the extraction is now about 30-60% faster (depending on the pdf) thanks to some improvements in my extraction code.</p>
+</li>
 <li><p>New wildcards for editors (<code>%d</code>, <code>%D</code>, <code>%L</code>, <code>%l</code>)</p></li>
 <li>Fix bug with unnecessary suffix after multiple renames of same file</li>
 </ul><h4>
