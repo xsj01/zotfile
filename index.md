@@ -58,6 +58,7 @@ ZotFile renames files based on bibliographic information from the currently sele
 - `%v` journal volume
 - `%e` journal issue
 - `%f` pages
+- `%c` collection path (only for sub-folders, not file names). When item is in multiple collections, user can choose between the different collections.
 - `%n` patent number (patent items only)
 - `%i` assignee (patent items only)
 <!-- - `%u` issue date (patent items only) -->

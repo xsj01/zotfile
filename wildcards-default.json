@@ -69,5 +69,6 @@
   "e": "issue",
   "T": "itemType",
   "f": "pages",
-  "x": "extra"
+  "x": "extra",
+  "c": "collectionPaths"
 }
