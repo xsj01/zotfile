@@ -245,6 +245,10 @@ Search for `extensions.zotfile` to see a list of the hidden zotfile options. Her
 
     Duration (in milliseconds) for which the info windows show up.
 
+- `pdfExtraction.replacements`
+
+    Custom, regular expression-based replacements in extracted annotations. This can be useful because some pdfs contain ‘broken’ characters. For example, [{"regex":" ?\u00f0", "replacement": " ("}] replaces the unicode character ð with ( to fix a problem in pdfs from a certain publisher. In this case, ð is a problem with the pdf and not with zotfile’s extraction. The hidden option can be used to fix it.
+
 ### REPORTING A BUG
 
 You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/5301/6/zotfile-zotero-plugin-to-rename-move-and-attach-pdfs-send-them-to-ipad-extract-pdf-annotations/) in the Zotero forum. Please provide information about about your system (Windows, Mac OS, Linux etc) as well as your Zotfile, Zotero and Firefox version. Also make sure that you can reproduce the bug and describe the steps as closely as possible. In addition, any information from the Error Console are very helpful. You can check the Error Console in Zotero for Firefox by going to 'Tools->Web Dev.->Error Console' in Firefox and look for any zotfile related stuff after the bug occurred. For zotfile bugs,  the 'Source File' should be something like `chrome://zotfile/content/...` (most likely zotfile.js). You can also clear the console, execute the actions that caused the problem and then check again. If I ask you to provide a Report ID, follow the instructions [here](http://www.zotero.org/support/reporting_bugs).
@@ -259,7 +263,7 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 
 - **Improved extraction of annotation**
 
-    This version includes three improvements for the extraction of annotations. First, the extraction is now based on the most recent pdf.js version ([here](https://github.com/jlegewie/pdf.js/tree/extract-v3) is my fork with the modified version of [pdf.js](https://github.com/mozilla/pdf.js) used in zotfile). With this update, zotfile should work with more pdfs. Second, the extraction is now about 40-60% faster (depending on the pdf) thanks to some improvements in the extraction code. Third, the extraction now runs in the background so that Zotero is not blocked while annotations are extracted. 
+    This version includes four improvements for the extraction of annotations. First, the new version greatly improves the detection of correct spaces between words. Second, the extraction is now based on the most recent pdf.js version ([here](https://github.com/jlegewie/pdf.js/tree/extract-v3) is my fork with the modified version of [pdf.js](https://github.com/mozilla/pdf.js) used in zotfile). With this update, zotfile should work with more pdfs. Second, the extraction is now about 40-60% faster (depending on the pdf) thanks to some improvements in the extraction code. Third, the extraction now runs in the background so that Zotero is not blocked while annotations are extracted. 
 
 - **Get Table of Contents from PDF**
 
