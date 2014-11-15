@@ -251,7 +251,7 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 
 ### CHANGELOG
 
-#### Changes in 4.0
+#### Changes in 4.0 and 4.1
 
 - **Goto annotation in pdf**
 
@@ -286,6 +286,8 @@ You can report bugs on the [Zotfile thread](http://forums.zotero.org/discussion/
 - Improved renaming function (avoids re-indexing of linked attachments)
 - New wildcards for editors (`%d`, `%D`, `%L`, `%l`)
 - Fix bug with unnecessary suffix after multiple renames of same file
+- further improvements for the extraction of annotations in 4.1
+- truncate title after '!'
 
 #### Changes in 3.1
 
