@@ -313,6 +313,10 @@ On Mac OS, you can also use poppler to extract pdf annotations (ZotFile Preferen
 <p><code>info_window_duration</code>, <code>info_window_duration_clickable</code></p>
 <p>Duration (in milliseconds) for which the info windows show up.</p>
 </li>
+<li>
+<p><code>pdfExtraction.replacements</code></p>
+<p>Custom, regular expression-based replacements in extracted annotations. This can be useful because some pdfs contain ‘broken’ characters. For example, [{"regex":" ?\u00f0", "replacement": " ("}] replaces the unicode character ð with ( to fix a problem in pdfs from a certain publisher. In this case, ð is a problem with the pdf and not with zotfile’s extraction. The hidden option can be used to fix it.</p>
+</li>
 </ul>
 <h3 id="reporting-a-bug"><a name="user-content-reporting-a-bug" href="#reporting-a-bug" class="headeranchor-link"  aria-hidden="true"><span class="headeranchor"></span></a>REPORTING A BUG</h3>
 <p>You can report bugs on the <a href="http://forums.zotero.org/discussion/5301/6/zotfile-zotero-plugin-to-rename-move-and-attach-pdfs-send-them-to-ipad-extract-pdf-annotations/">Zotfile thread</a> in the Zotero forum. Please provide information about about your system (Windows, Mac OS, Linux etc) as well as your Zotfile, Zotero and Firefox version. Also make sure that you can reproduce the bug and describe the steps as closely as possible. In addition, any information from the Error Console are very helpful. You can check the Error Console in Zotero for Firefox by going to &lsquo;Tools-&gt;Web Dev.-&gt;Error Console&rsquo; in Firefox and look for any zotfile related stuff after the bug occurred. For zotfile bugs,  the &lsquo;Source File&rsquo; should be something like <code>chrome://zotfile/content/...</code> (most likely zotfile.js). You can also clear the console, execute the actions that caused the problem and then check again. If I ask you to provide a Report ID, follow the instructions <a href="http://www.zotero.org/support/reporting_bugs">here</a>.</p>
@@ -325,7 +329,7 @@ On Mac OS, you can also use poppler to extract pdf annotations (ZotFile Preferen
 </li>
 <li>
 <p><strong>Improved extraction of annotation</strong></p>
-<p>This version includes three improvements for the extraction of annotations. First, the extraction is now based on the most recent pdf.js version (<a href="https://github.com/jlegewie/pdf.js/tree/extract-v3">here</a> is my fork with the modified version of <a href="https://github.com/mozilla/pdf.js">pdf.js</a> used in zotfile). With this update, zotfile should work with more pdfs. Second, the extraction is now about 40-60% faster (depending on the pdf) thanks to some improvements in the extraction code. Third, the extraction now runs in the background so that Zotero is not blocked while annotations are extracted. </p>
+<p>This version includes four improvements for the extraction of annotations. First, the new version greatly improves the detection of correct spaces between words. Second, the extraction is now based on the most recent pdf.js version (<a href="https://github.com/jlegewie/pdf.js/tree/extract-v3">here</a> is my fork with the modified version of <a href="https://github.com/mozilla/pdf.js">pdf.js</a> used in zotfile). With this update, zotfile should work with more pdfs. Second, the extraction is now about 40-60% faster (depending on the pdf) thanks to some improvements in the extraction code. Third, the extraction now runs in the background so that Zotero is not blocked while annotations are extracted. </p>
 </li>
 <li>
 <p><strong>Get Table of Contents from PDF</strong></p>
