@@ -206,6 +206,10 @@ Zotero.ZotFile.Wildcards = new function() {
     }
 
     function wildcardTable(item) {
+        
+        var abbname = Zotero.ZotFile.Abbr.ModifyJAbb(item);
+        // alert(abbname);
+        item.saveTx();
         // item type
         var item_type = item.itemTypeID;
         var item_type_name = Zotero.ItemTypes.getName(item_type);
@@ -226,6 +230,7 @@ Zotero.ZotFile.Wildcards = new function() {
             "lastAuthor_lastInitial": authors[8],
             "lastAuthor_lastf": authors[9],
             "lastAuthor_initials": authors[10],
+            "AbbName":abbname,
             "collectionPaths": Zotero.ZotFile.Utils.getCollectionPathsOfItem(item),
             "citekey": Zotero.BetterBibTeX ? item.getField('citekey') : undefined
         };

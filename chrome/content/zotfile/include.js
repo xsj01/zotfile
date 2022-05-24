@@ -2,7 +2,7 @@
 if (!Zotero.ZotFile) {
     var zotfileLoader = Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
                     .getService(Components.interfaces.mozIJSSubScriptLoader);
-    var scripts = ['zotfile', 'pdfAnnotations', 'pdfOutline', 'wildcards', 'tablet', 'utils', 'notifier', 'ui'];
+    var scripts = ['zotfile', 'pdfAnnotations', 'pdfOutline', 'wildcards', 'tablet', 'utils', 'notifier', 'ui','abbr'];
     scripts.forEach(s => zotfileLoader.loadSubScript('chrome://zotfile/content/' + s + '.js'));
 }
 
