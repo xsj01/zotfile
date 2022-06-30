@@ -13,9 +13,14 @@
         //alert(item.getField('conferenceName'));
         //alert(item.getField('proceedingsTitle'));
         // jname=item.getField('publicationTitle');
+        // var atts = Zotero.Items.get(item.getAttachments())
+            // .filter(this.checkFileType);
+        // var att = atts[0];
+        // var filename = Zotero.Attachments.getFileBaseNameFromItem(item);
+        // alert(att.attachmentFilename)
         var newabb;
         // alert(item.getType())
-        var possible_fields = ['publicationTitle', 'conferenceName', 'proceedingsTitle', 'bookTitle'];
+        var possible_fields = ['publicationTitle', 'proceedingsTitle', 'conferenceName', 'bookTitle'];
 
         for (var pf=0; pf<possible_fields.length;pf++){
             jname=item.getField(possible_fields[pf]);
@@ -77,7 +82,9 @@
         }
 
         if(newabb==undefined){
-            alert("Unknown document type: " + item.getType())
+            // alert("Title not defined or Unknown document type: " + item.getType())
+            console.log("Error occurs while getting the abbr of " + item.getField('tittle')+" Publication title not defined or unknown document type: " + item.getType());
+            newabb='';
         }
         update_extra(item,newabb)
         // };
@@ -147,7 +154,8 @@
                 "europhysics letters":"EPL",
                 "journal of physics: Condensed Matter":"condmat",
                 "nano letters":"NanoLett",
-                "nature nanotechnology":"NatNano"
+                "nature nanotechnology":"NatNano",
+                "Autonomous Robots":"AR",
             },
             "keyword":
             {
@@ -179,6 +187,7 @@
                 "iclr":"ICLR",
                 "ECCV":"ECCV",
                 "siggraph":"SIGGRAPH",
+                "annual conference on computer graphics":"SIGGRAPH",
             }
         };
 
@@ -228,7 +237,7 @@ function genJAbb(Joname) {
     var words=Joname.split(' ');
     var newwords=[]
     var jj=0;
-    var ignore_list=['ieee', 'and','of','the','on'];
+    var ignore_list=['ieee', 'and','of','the','on','proceedings'];
     // ignore_list.includes(words[ii]);
     for(var ii=0;ii<words.length;ii++){
         if(words[ii]&&words[ii]!='IEEE'&&words[ii].toLowerCase()!='of'&&words[ii].toLowerCase()!='the'&&words[ii].toLowerCase()!='and'){
