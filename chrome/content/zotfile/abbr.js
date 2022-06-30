@@ -65,6 +65,20 @@
         if (item.getType()==6){//book
             newabb='Book';
         }
+        if (item.getType()==38){//preprint
+            abb=item.getField('repository')
+            if(abb){
+                newabb=abb;
+            }
+            else{
+                newabb='arXiv';
+            }
+            item.setField("series",newabb);
+        }
+
+        if(newabb==undefined){
+            alert("Unknown document type: " + item.getType())
+        }
         update_extra(item,newabb)
         // };
         // var no_series_type_list = [33]
