@@ -62,6 +62,10 @@
         if (item.getType()==33){//thesis
             newabb='Thesis';
         }
+        if (item.getType()==6){//book
+            newabb='Book';
+        }
+        update_extra(item,newabb)
         // };
         // var no_series_type_list = [33]
         // if (!(item.getType() in no_series_type_list)){
@@ -80,8 +84,34 @@
         //         }
         //     }
         // }
+
+        
         return newabb
     };
+ }
+
+ function update_extra(item,newabb){
+    var extrastr=item.getField('extra')
+    if(extrastr){
+        var patt1=new RegExp("tex\.abbr[ ]*=[ ]*([\\w,-]*)$",'m');
+        var result=patt1.exec(extrastr);
+        if (result){
+            if (result[1]!=newabb){
+                extrastr=extrastr.replace(result[1],newabb);
+            }
+            else{
+                return
+            }
+        }
+        else{
+            extrastr='tex.abbr='+newabb+'\n'+extrastr
+        }
+        
+    }
+    else{
+        extrastr='tex.abbr='+newabb
+    }
+    item.setField('extra',extrastr)
  }
 
  function get_abbr_map(){
@@ -107,30 +137,34 @@
             },
             "keyword":
             {
-                "icra":"ICRA",
-                "iros":"IROS",
+                
                 "international conference on robotics and automation":"ICRA",
                 "international conference on intelligent robots and systems":"IROS",
                 "Advances in neural information processing systems":"NIPS",
+                "computer vision and pattern recognition":"CVPR",
+                "International Conference on Computer Vision":"ICCV",
+                "European Conference on Computer Vision":"ECCV",
+                "International Conference on Automated Planning and Scheduling":"ICAPS",
+                "Conference on Artificial Intelligence":"AAAI",
+                "International Joint Conference on Artificial Intelligence":"IJCAI",
+                "International Journal of Robotics Research":"IJRR",
+                "International Conference on Machine Learning":"ICML",
+                "International Conference on Learning Representations":"ICLR",
+                "Transactions on Robotics":"TRO",
+                "Journal on Robotics and Automation": "JRA",
+                "International journal of Robotics research": "IJRR",
+                "ACM Transactions on Graphics": "TOG",
+                "Conference on Robot Learning":"CoRL",
+                "icra":"ICRA",
+                "iros":"IROS",
                 "ICCV":"ICCV",
                 "cvpr":"CVPR",
                 "aaai":"AAAI",
                 "ijcai":"IJCAI",
                 "icml":"ICML",
+                "iclr":"ICLR",
                 "ECCV":"ECCV",
                 "siggraph":"SIGGRAPH",
-                "computer vision and pattern recognition":"CVPR",
-                "International Conference on Computer Vision":"ICCV",
-                "European Conference on Computer Vision":"ECCV",
-                "Conference on Artificial Intelligence":"AAAI",
-                "International Joint Conference on Artificial Intelligence":"IJCAI",
-                "International Journal of Robotics Research":"IJRR",
-                "International Conference on Machine Learning":"ICML",
-                "Transactions on Robotics":"T-RO",
-                "Journal on Robotics and Automation": "JRA",
-                "International journal of Robotics research": "IJRR",
-                "ACM Transactions on Graphics": "TOG",
-                "Conference on Robot Learning":"CoRL",
             }
         };
 
