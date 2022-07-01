@@ -14,7 +14,7 @@ Zotero.ZotFile.Abbr = new function() {
         // var atts = Zotero.Items.get(super.getSelectedAttachments())
         //     .filter(super.checkFileType);
         var result, origTitle, origKey, origFileName;
-        var patt1=new RegExp("([\\w]+[0-9]{2}[\\w]+)_(.+)\.(pdf|PDF)$",'m');
+        var patt1=new RegExp("([A-Za-zÀ-ÖØ-öø-ÿ]+[0-9]{2}[a-z]+)_(.+)\.(pdf|PDF)$",'m');
 
         for (let i = 0; i < atts.length; i++) {
             let att = atts[i];
@@ -226,6 +226,8 @@ function get_abbr_map(){
                 "nano letters":"NanoLett",
                 "nature nanotechnology":"NatNano",
                 "Autonomous Robots":"AR",
+                "Applied Intelligence":"AI",
+                "Artificial Intelligence":"AI",
             },
             "keyword":
             {
@@ -240,6 +242,7 @@ function get_abbr_map(){
                 "Conference on Artificial Intelligence":"AAAI",
                 "International Joint Conference on Artificial Intelligence":"IJCAI",
                 "International Journal of Robotics Research":"IJRR",
+                "Robotics: Science and Systems": "RSS",
                 "International Conference on Machine Learning":"ICML",
                 "International Conference on Learning Representations":"ICLR",
                 "Transactions on Robotics":"TRO",
@@ -310,7 +313,8 @@ function genJAbb(Joname) {
     var ignore_list=['ieee', 'and','of','the','on','proceedings'];
     // ignore_list.includes(words[ii]);
     for(var ii=0;ii<words.length;ii++){
-        if(words[ii]&&words[ii]!='IEEE'&&words[ii].toLowerCase()!='of'&&words[ii].toLowerCase()!='the'&&words[ii].toLowerCase()!='and'){
+        if(!ignore_list.includes(words[ii].toLowerCase())){
+        // if(words[ii]&&words[ii]!='IEEE'&&words[ii].toLowerCase()!='of'&&words[ii].toLowerCase()!='the'&&words[ii].toLowerCase()!='and'){
             newwords[jj]=words[ii];
             jj++;
         }
