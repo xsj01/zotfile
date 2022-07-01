@@ -2,14 +2,44 @@
  * Zotero.ZotFile.Tablet
  * Functions related to tablet features
  */
- Zotero.ZotFile.Abbr = new function() {
+Zotero.ZotFile.Abbr = new function() {
+
+
+    this.phraseTitle = function(item) {
+        if(checkIfProcessed(item)){
+            return;
+        }
+        var atts = Zotero.Items.get(item.getAttachments())
+        //     .filter(this.checkFileType);
+        // var atts = Zotero.Items.get(super.getSelectedAttachments())
+        //     .filter(super.checkFileType);
+        var result, origTitle, origKey, origFileName;
+        var patt1=new RegExp("([\\w]+[0-9]{2}[\\w]+)_(.+)\.(pdf|PDF)$",'m');
+
+        for (let i = 0; i < atts.length; i++) {
+            let att = atts[i];
+            origFileName = att.attachmentFilename
+            result=patt1.exec(origFileName);
+            if(result){
+                origKey = result[1];
+                origTitle = result[2];
+                update_extra_title(item, origTitle, origKey);
+                item.setField("shortTitle", origTitle);
+                return;
+            }
+        }
+
+        // var att = atts[0];
+        // var filename = Zotero.Attachments.getFileBaseNameFromItem(item);
+        // alert(att.attachmentFilename);
+    }
 
     /**
-     * Remove duplicate elements from array
-     * @param  {array} x Array
-     * @return {array}   Modified array.
+     * Modify journal abbrivation of input item
+     * @param  {item} 
+     * @return {string}   Abbrivation of the journal
      */
-     this.ModifyJAbb = function(item) {
+    this.modifyJAbb = function(item) {
         //alert(item.getField('conferenceName'));
         //alert(item.getField('proceedingsTitle'));
         // jname=item.getField('publicationTitle');
@@ -18,6 +48,8 @@
         // var att = atts[0];
         // var filename = Zotero.Attachments.getFileBaseNameFromItem(item);
         // alert(att.attachmentFilename)
+        this.phraseTitle(item);
+
         var newabb;
         // alert(item.getType())
         var possible_fields = ['publicationTitle', 'proceedingsTitle', 'conferenceName', 'bookTitle'];
@@ -52,9 +84,11 @@
         //     }
         // }
         // else{
-        if (item.getType()==4){
+        var itemType = item.getType()
+        if (itemType==4|itemType==20){
             abb=item.getField('journalAbbreviation');
             newabb=genJAbb(jname)
+            // newabb=genJAbb(item.getField('publicationTitle'))
             var patt=/ /;
             if(!abb||patt.test(abb)){
                 item.setField("journalAbbreviation",newabb);
@@ -64,13 +98,13 @@
             }
             item.setField("series",newabb);
         }
-        if (item.getType()==33){//thesis
+        if (itemType==33){//thesis
             newabb='Thesis';
         }
-        if (item.getType()==6){//book
+        if (itemType==6){//book
             newabb='Book';
         }
-        if (item.getType()==38){//preprint
+        if (itemType==38){//preprint
             abb=item.getField('repository')
             if(abb){
                 newabb=abb;
@@ -80,13 +114,23 @@
             }
             item.setField("series",newabb);
         }
+        // if(newabb==undefined){
+        //     if(item.getField("series")){
+        //         newabb = item.getField("series");
+        //     }
+        //     if(item.getField("series")){
+        //         newabb = item.getField("series");
+        //     }
+        // }
 
         if(newabb==undefined){
-            // alert("Title not defined or Unknown document type: " + item.getType())
-            console.log("Error occurs while getting the abbr of " + item.getField('tittle')+" Publication title not defined or unknown document type: " + item.getType());
+            // alert("Title not defined or Unknown document type: " + itemType)
+            var msg = "Error occurs while getting the abbr of " + item.getField('title')+" Publication title not defined or unknown document type: " + itemType;
+            Components.utils.reportError(msg);
+            // console.log("Error occurs while getting the abbr of " + item.getField('title')+" Publication title not defined or unknown document type: " + item.getType());
             newabb='';
         }
-        update_extra(item,newabb)
+        update_extra_tex(item,newabb)
         // };
         // var no_series_type_list = [33]
         // if (!(item.getType() in no_series_type_list)){
@@ -109,13 +153,36 @@
         
         return newabb
     };
- }
+}
 
- function update_extra(item,newabb){
+function checkIfProcessed(item){
     var extrastr=item.getField('extra')
     if(extrastr){
         var patt1=new RegExp("tex\.abbr[ ]*=[ ]*([\\w,-]*)$",'m');
         var result=patt1.exec(extrastr);
+        if (result){
+            return true;
+        }
+    }
+    return false;
+}
+
+function update_extra_title(item, origTitle, origKey){
+    var extrastr=item.getField('extra');
+    extrastr='origTitle='+origTitle+'\n'+extrastr;
+    extrastr='tex.key='+origKey+'\n'+extrastr;
+    item.setField('extra',extrastr);
+}
+
+function update_extra_tex(item,newabb){
+    var extrastr=item.getField('extra')
+    if(extrastr){
+        var patt1=new RegExp("tex\.abbr[ ]*=[ ]*([\\w,-]+)$",'m');
+        var result=patt1.exec(extrastr);
+
+        var patt2=new RegExp("tex\.abbr[ ]*=[ ]*$",'m');
+        var result2=patt2.exec(extrastr);
+
         if (result){
             if (result[1]!=newabb){
                 extrastr=extrastr.replace(result[1],newabb);
@@ -124,18 +191,21 @@
                 return
             }
         }
+        else if(result2){
+            extrastr=extrastr.replace(result2[0],'tex.abbr='+newabb);
+        }
         else{
-            extrastr='tex.abbr='+newabb+'\n'+extrastr
+            extrastr='tex.abbr='+newabb+'\n'+extrastr;
         }
         
     }
     else{
-        extrastr='tex.abbr='+newabb
+        extrastr='tex.abbr='+newabb;
     }
-    item.setField('extra',extrastr)
- }
+    item.setField('extra',extrastr);
+}
 
- function get_abbr_map(){
+function get_abbr_map(){
     //var filepath = "/Users/sjxue/Desktop/codes/TOOLS/zotero/abbr_map.json";
     //var data = require(filepath);
 
@@ -287,8 +357,8 @@ function genJAbb(Joname) {
         }
         return jabb;
     }
-    return jabb
-}
+    return jabb;
+};
 // function ModifyJAbb(item) {
 //     //alert(item.getField('conferenceName'));
 //     //alert(item.getField('proceedingsTitle'));

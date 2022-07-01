@@ -207,7 +207,7 @@ Zotero.ZotFile.Wildcards = new function() {
 
     function wildcardTable(item) {
         
-        var abbname = Zotero.ZotFile.Abbr.ModifyJAbb(item);
+        var abbname = Zotero.ZotFile.Abbr.modifyJAbb(item);
         // alert(abbname);
         item.saveTx();
         // item type
