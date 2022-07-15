@@ -84,8 +84,11 @@ Zotero.ZotFile.Abbr = new function() {
         //     }
         // }
         // else{
-        var itemType = item.getType()
-        if (itemType==4|itemType==20){
+        // var itemType = item.getType()
+        var itemType = Zotero.ItemTypes.getName(item.itemTypeID);
+        // alert(itemType+' '+' '+item.itemTypeID)
+        // if (itemType==4|itemType==20){
+        if (itemType=="journalArticle"){
             abb=item.getField('journalAbbreviation');
             newabb=genJAbb(jname)
             // newabb=genJAbb(item.getField('publicationTitle'))
@@ -98,13 +101,15 @@ Zotero.ZotFile.Abbr = new function() {
             }
             item.setField("series",newabb);
         }
-        if (itemType==33){//thesis
-            newabb='Thesis';
+        var type_list = ["thesis","book","report","webpage","blogPost"];
+        if (type_list.includes(itemType)){
+            newabb = itemType.charAt(0).toUpperCase() + itemType.slice(1); // book -> Book
         }
-        if (itemType==6){//book
-            newabb='Book';
+        if (itemType=="bookSection"){
+            newabb='BookSec';
         }
-        if (itemType==38){//preprint
+
+        if (itemType=="preprint"){//preprint
             abb=item.getField('repository')
             if(abb){
                 newabb=abb;
@@ -241,6 +246,7 @@ function get_abbr_map(){
                 "International Conference on Automated Planning and Scheduling":"ICAPS",
                 "Conference on Artificial Intelligence":"AAAI",
                 "International Joint Conference on Artificial Intelligence":"IJCAI",
+                "Journal of artificial intelligence research":"JAIR",
                 "International Journal of Robotics Research":"IJRR",
                 "Robotics: Science and Systems": "RSS",
                 "International Conference on Machine Learning":"ICML",
@@ -310,7 +316,7 @@ function genJAbb(Joname) {
     var words=Joname.split(' ');
     var newwords=[]
     var jj=0;
-    var ignore_list=['ieee', 'and','of','the','on','proceedings'];
+    var ignore_list=['ieee', 'and','of','the','on','proceedings',"acm"];
     // ignore_list.includes(words[ii]);
     for(var ii=0;ii<words.length;ii++){
         if(!ignore_list.includes(words[ii].toLowerCase())){
