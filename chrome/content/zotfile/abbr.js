@@ -108,6 +108,9 @@ Zotero.ZotFile.Abbr = new function() {
         if (itemType=="bookSection"){
             newabb='BookSec';
         }
+        if (itemType=="presentation"){
+            newabb='Slides';
+        }
 
         if (itemType=="preprint"){//preprint
             abb=item.getField('repository')
@@ -267,6 +270,7 @@ function get_abbr_map(){
                 "ECCV":"ECCV",
                 "siggraph":"SIGGRAPH",
                 "annual conference on computer graphics":"SIGGRAPH",
+                "Annual Review":"AR",
             }
         };
 
@@ -302,13 +306,13 @@ function genJAbb(Joname) {
         if (patt.test(jnlc)) return word_dict[word]
     }
 
-    //Annual Review (XXX) ->AnnRevXXX
-    var patt=/(Annual Review)/i
-    if(patt.test(Joname)){
-        jabb=Joname.replace(/Annual Review/i,'');
-        jabb='AnnRev'+jabb.replace(/[^A-Z]/g,'')
-        return jabb;
-    }
+    // //Annual Review (XXX) ->AnnRevXXX
+    // var patt=/(Annual Review)/i
+    // if(patt.test(Joname)){
+    //     jabb=Joname.replace(/Annual Review/i,'');
+    //     jabb='AnnRev'+jabb.replace(/[^A-Z]/g,'')
+    //     return jabb;
+    // }
 
     
 
